@@ -1,0 +1,29 @@
+name: "Actions Discord Notifier"
+description: "GitHub Action to push a message to a Discord Webhook, in embed form"
+author: Andrew Augustine <azure-agst>
+
+inputs:
+  webhook:
+    description: "Webhook URL"
+    required: true
+  message:
+    description: "The desired message to send"
+    required: true
+outputs:
+  needs-updating:
+    description: "True or false"
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
+  env:
+    webhook: ${{ inputs.webhook }}
+    message: ${{ inputs.message }}
+    repo: ${{ github.repository }}
+    owner: ${{ github.repository_owner }}
+    run_id: ${{ github.run_id }}
+    run_number: ${{ github.run_number }}
+    ref_name: ${{ github.ref_name }}
+      
+branding:
+  icon: anchor
+  color: blue
