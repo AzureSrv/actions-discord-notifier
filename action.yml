@@ -13,16 +13,25 @@ outputs:
   needs-updating:
     description: "True or false"
 runs:
-  using: 'docker'
-  image: 'Dockerfile'
-  env:
-    webhook: ${{ inputs.webhook }}
-    message: ${{ inputs.message }}
-    repo: ${{ github.repository }}
-    owner: ${{ github.repository_owner }}
-    run_id: ${{ github.run_id }}
-    run_number: ${{ github.run_number }}
-    ref_name: ${{ github.ref_name }}
+  using: 'composite'
+  steps:
+  - name: Checkout Repository
+    uses: actions/checkout@v3
+  - name: Prep env vars
+    shell: bash
+    run: |
+      echo "webhook=${{ inputs.webhook }}" >> $GITHUB_ENV
+      echo "message=${{ inputs.message }}" >> $GITHUB_ENV
+      echo "repo=${{ github.repository }}" >> $GITHUB_ENV
+      echo "owner=${{ github.repository_owner }}" >> $GITHUB_ENV
+      echo "run_id=${{ github.run_id }}" >> $GITHUB_ENV
+      echo "run_number=${{ github.run_number }}" >> $GITHUB_ENV
+      echo "ref_name=${{ github.ref_name }}" >> $GITHUB_ENV
+  - name: Run Webhook
+    shell: bash
+    run: |
+      chmod +x entrypoint.sh
+      ./entrypoint.sh
       
 branding:
   icon: anchor

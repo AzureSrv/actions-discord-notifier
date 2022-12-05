@@ -2,7 +2,7 @@
 
 # make sure wenhook and messages are defined
 if [[ ${webhook:-none} == "none" || ${message:-none} == "none" ]]; then
-    echo "::error Webhook or Message not defined! Exiting..."
+    echo "::error::Webhook or Message not defined! Exiting..."
     exit -1
 fi
 
