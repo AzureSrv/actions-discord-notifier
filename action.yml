@@ -25,11 +25,13 @@ runs:
       echo "repo=${{ github.repository }}" >> $GITHUB_ENV
       echo "owner=${{ github.repository_owner }}" >> $GITHUB_ENV
       echo "run_id=${{ github.run_id }}" >> $GITHUB_ENV
-      echo "run_number'${{ github.run_number }}" >> $GITHUB_ENV
+      echo "run_number=${{ github.run_number }}" >> $GITHUB_ENV
       echo "ref_name=${{ github.ref_name }}" >> $GITHUB_ENV
   - name: Run Webhook
     shell: bash
-    run: ./entrypoint.sh
+    run: |
+      chmod +x entrypoint.sh
+      ./entrypoint.sh
       
 branding:
   icon: anchor
