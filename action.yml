@@ -30,7 +30,8 @@ runs:
   - name: Run Webhook
     shell: bash
     run: |
-      chmod +x entrypoint.sh
+      cd ${{github.action_path}}
+      chmod +x ./entrypoint.sh
       ./entrypoint.sh
       
 branding:
